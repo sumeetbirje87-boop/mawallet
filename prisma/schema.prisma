@@ -1,0 +1,197 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id               String          @id @default(uuid())
+  email            String          @unique
+  passwordHash     String
+  displayName      String
+  currencyDefault  String          @default("USD")
+  timezone         String          @default("UTC")
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  
+  accounts         Account[]
+  transactions     Transaction[]
+  categories       Category[]
+  budgets          Budget[]
+  savingsGoals     SavingsGoal[]
+  recurringRules   RecurringRule[]
+  debts            Debt[]
+  bills            Bill[]
+  notifications    Notification[]
+}
+
+model Account {
+  id             String        @id @default(uuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id])
+  name           String
+  type           String        // enum: bank, cash, credit_card, digital_wallet, investment
+  balance        Int           // Stored as integer (smallest currency unit)
+  currency       String
+  isActive       Boolean       @default(true)
+  icon           String?
+  color          String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  transactions   Transaction[]
+  debts          Debt[]
+  bills          Bill[]
+}
+
+model Transaction {
+  id              String         @id @default(uuid())
+  userId          String
+  user            User           @relation(fields: [userId], references: [id])
+  accountId       String
+  account         Account        @relation(fields: [accountId], references: [id])
+  type            String         // enum: income, expense, transfer
+  amount          Int            // Stored as integer, always positive
+  currency        String
+  categoryId      String?
+  category        Category?      @relation("CategoryTransactions", fields: [categoryId], references: [id])
+  subcategoryId   String?
+  subcategory     Category?      @relation("SubcategoryTransactions", fields: [subcategoryId], references: [id])
+  tags            String         // Stored as JSON string array
+  description     String?
+  note            String?
+  date            DateTime
+  time            String?
+  isRecurring     Boolean        @default(false)
+  recurringRuleId String?
+  recurringRule   RecurringRule? @relation(fields: [recurringRuleId], references: [id])
+  receiptUrl      String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+model Category {
+  id       String   @id @default(uuid())
+  userId   String?
+  user     User?    @relation(fields: [userId], references: [id])
+  name     String
+  type     String   // enum: income, expense
+  parentId String?
+  parent   Category? @relation("Subcategories", fields: [parentId], references: [id])
+  icon     String?
+  color    String?
+  isActive Boolean  @default(true)
+
+  subcategories          Category[]    @relation("Subcategories")
+  transactions           Transaction[] @relation("CategoryTransactions")
+  subcategoryTransactions Transaction[] @relation("SubcategoryTransactions")
+  budgets                Budget[]
+  bills                  Bill[]
+}
+
+model Budget {
+  id             String    @id @default(uuid())
+  userId         String
+  user           User      @relation(fields: [userId], references: [id])
+  categoryId     String
+  category       Category  @relation(fields: [categoryId], references: [id])
+  amountLimit    Int       // Stored as integer
+  period         String    // enum: weekly, monthly, quarterly, yearly, custom
+  startDate      DateTime
+  endDate        DateTime? // null for rolling
+  alertThreshold Int       @default(80) // percentage
+  isActive       Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model SavingsGoal {
+  id                    String    @id @default(uuid())
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id])
+  name                  String
+  targetAmount          Int       // Stored as integer
+  currentAmount         Int       @default(0) // Stored as integer
+  deadline              DateTime?
+  icon                  String?
+  color                 String?
+  autoAllocateAmount    Int?
+  autoAllocateFrequency String?   // enum: daily, weekly, monthly
+  isCompleted           Boolean   @default(false)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+}
+
+model RecurringRule {
+  id                  String        @id @default(uuid())
+  userId              String
+  user                User          @relation(fields: [userId], references: [id])
+  transactionTemplate String        // JSON string (amount, category, account, type, description)
+  frequency           String        // enum: daily, weekly, biweekly, monthly, quarterly, yearly
+  startDate           DateTime
+  endDate             DateTime?
+  nextOccurrence      DateTime
+  isActive            Boolean       @default(true)
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+
+  transactions        Transaction[]
+}
+
+model Debt {
+  id                 String    @id @default(uuid())
+  userId             String
+  user               User      @relation(fields: [userId], references: [id])
+  name               String
+  type               String    // enum: loan, credit_card, mortgage, personal, other
+  principalAmount    Int
+  currentBalance     Int
+  interestRate       Float
+  minimumPayment     Int
+  dueDateDay         Int       // 1-31
+  startDate          DateTime
+  expectedPayoffDate DateTime?
+  linkedAccountId    String?
+  linkedAccount      Account?  @relation(fields: [linkedAccountId], references: [id])
+  isActive           Boolean   @default(true)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
+
+model Bill {
+  id                 String    @id @default(uuid())
+  userId             String
+  user               User      @relation(fields: [userId], references: [id])
+  name               String
+  amount             Int       // exact or estimated
+  isFixed            Boolean   @default(true)
+  dueDateDay         Int       // 1-31
+  categoryId         String
+  category           Category  @relation(fields: [categoryId], references: [id])
+  autoPay            Boolean   @default(false)
+  reminderDaysBefore Int       @default(3)
+  linkedAccountId    String?
+  linkedAccount      Account?  @relation(fields: [linkedAccountId], references: [id])
+  isActive           Boolean   @default(true)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
+
+model Notification {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  type      String    // enum: bill_due, budget_warning, budget_exceeded, goal_milestone, goal_achieved, recurring_logged, system
+  title     String
+  message   String
+  isRead    Boolean   @default(false)
+  actionUrl String?
+  createdAt DateTime  @default(now())
+  readAt    DateTime?
+}
