@@ -15,7 +15,7 @@ export async function getAccounts() {
     orderBy: { createdAt: "desc" }
   });
 
-  return accounts.map(a => ({
+  return accounts.map((a: any) => ({
     ...a,
     balance: a.balance / 100, // Return as decimal for UI
   }));
