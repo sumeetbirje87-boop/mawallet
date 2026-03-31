@@ -75,7 +75,7 @@ export async function getModalData() {
   const hasIncome = categories.some((c: any) => c.type === "income");
 
   if (!hasExpense || !hasIncome) {
-    const toCreate = [];
+    const toCreate: { userId: string; name: string; type: string; icon: string; color: string }[] = [];
     if (!hasExpense) {
       toCreate.push(
         { userId, name: "Food & Dining", type: "expense", icon: "Utensils", color: "#f43f5e" },

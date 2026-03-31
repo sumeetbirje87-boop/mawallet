@@ -50,7 +50,7 @@ export async function getNetWorthData() {
 
   // 3. Retroactive Plotting
   // We know Current NW today. Net Worth at Start of Month M = End of Month M - Savings in Month M.
-  const chartData = [];
+  const chartData: { name: string; netWorth: number }[] = [];
   let trackingNW = currentNetWorth;
   
   for (let i = 0; i < 6; i++) {
