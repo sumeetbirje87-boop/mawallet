@@ -80,7 +80,7 @@ export async function getReportData(period: "this_month" | "last_month" | "last_
   if (period === "this_month" || period === "last_month") {
     // Generate daily buckets
     const days = eachDayOfInterval({ start: startDate, end: endDate });
-    trendData = days.map(day => ({
+    trendData = days.map((day: any) => ({
       name: format(day, 'MMM dd'),
       rawDate: day,
       income: 0,
@@ -97,7 +97,7 @@ export async function getReportData(period: "this_month" | "last_month" | "last_
   } else {
     // Generate monthly buckets
     const months = eachMonthOfInterval({ start: startDate, end: endDate });
-    trendData = months.map(month => ({
+    trendData = months.map((month: any) => ({
       name: format(month, 'MMM yyyy'),
       rawDate: month,
       income: 0,

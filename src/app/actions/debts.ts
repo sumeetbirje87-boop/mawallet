@@ -16,7 +16,7 @@ export async function getDebts() {
     include: { linkedAccount: true }
   });
 
-  return debts.map(d => ({
+  return debts.map((d: any) => ({
     ...d,
     principalAmount: d.principalAmount / 100,
     currentBalance: d.currentBalance / 100,

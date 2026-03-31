@@ -106,7 +106,7 @@ export async function getDashboardData() {
     },
     chartData,
     expenseBreakdown,
-    recentTransactions: recentTransactions.map(tx => ({
+    recentTransactions: recentTransactions.map((tx: any) => ({
       ...tx,
       amount: tx.amount / 100,
     })),

@@ -15,7 +15,7 @@ export async function getSavingsGoals() {
     orderBy: { createdAt: "desc" }
   });
 
-  return goals.map(g => ({
+  return goals.map((g: any) => ({
     ...g,
     targetAmount: g.targetAmount / 100,
     currentAmount: g.currentAmount / 100,

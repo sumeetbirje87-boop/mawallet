@@ -69,10 +69,10 @@ export async function getNetWorthData() {
   }
 
   // 4. Breakdown Mapping
-  const mappedAssets = accounts.map(a => ({ id: a.id, name: a.name, type: a.type, balance: a.balance / 100 }))
-                               .sort((a,b) => b.balance - a.balance);
-  const mappedLiabilities = debts.map(d => ({ id: d.id, name: d.name, type: d.type, balance: d.currentBalance / 100 }))
-                               .sort((a,b) => b.balance - a.balance);
+  const mappedAssets = accounts.map((a: any) => ({ id: a.id, name: a.name, type: a.type, balance: a.balance / 100 }))
+                               .sort((a: any, b: any) => b.balance - a.balance);
+  const mappedLiabilities = debts.map((d: any) => ({ id: d.id, name: d.name, type: d.type, balance: d.currentBalance / 100 }))
+                               .sort((a: any, b: any) => b.balance - a.balance);
 
   return {
     metrics: {

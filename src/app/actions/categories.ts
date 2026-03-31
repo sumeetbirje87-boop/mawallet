@@ -31,7 +31,7 @@ export async function getCategories(type: "income" | "expense" = "expense") {
         { name: "Trading", type: "income", icon: "TrendingUp", color: "#06b6d4" }
      ];
      await prisma.category.createMany({ 
-        data: defaults.map(d => ({ ...d, userId })) 
+        data: defaults.map((d: any) => ({ ...d, userId })) 
      });
      cats = await prisma.category.findMany({ 
         where: { userId, type, isActive: true }, 

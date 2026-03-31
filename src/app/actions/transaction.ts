@@ -157,7 +157,7 @@ export async function getTransactions({
   ]);
 
   return {
-    transactions: transactions.map(tx => ({ ...tx, amount: tx.amount / 100 })),
+    transactions: transactions.map((tx: any) => ({ ...tx, amount: tx.amount / 100 })),
     total,
     totalPages: Math.ceil(total / limit),
     currentPage: page,

@@ -34,7 +34,7 @@ export async function getBillsAndStatus() {
   });
 
   // 3. Process Statuses Statelessly!
-  const processedBills = bills.map(bill => {
+  const processedBills = bills.map((bill: any) => {
     
     // Have we paid it this month?
     const hasPaid = transactionsThisMonth.some(tx => tx.tags.includes(`bill_id_${bill.id}`));

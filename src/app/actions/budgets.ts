@@ -23,7 +23,7 @@ export async function getBudgetsWithProgress() {
     include: { category: true },
   });
 
-  const categoriesIds = budgets.map(b => b.categoryId);
+  const categoriesIds = budgets.map((b: any) => b.categoryId);
 
   // Fetch all expenses this month for the budgeted categories
   const expensesThisMonth = await prisma.transaction.findMany({
@@ -36,7 +36,7 @@ export async function getBudgetsWithProgress() {
   });
 
   // Map expenses to budgets
-  const budgetProgress = budgets.map(budget => {
+  const budgetProgress = budgets.map((budget: any) => {
     const spentAmount = expensesThisMonth
       .filter(tx => tx.categoryId === budget.categoryId)
       .reduce((acc, tx) => acc + tx.amount, 0);
