@@ -8,7 +8,7 @@ import { Wallet, Landmark, CreditCard, Banknote, ShieldAlert } from "lucide-reac
 async function AccountsContent() {
   const accounts = await getAccounts();
   const currency = await getUserCurrency();
-  const totalBalance = accounts.filter(a => a.isActive).reduce((acc, a) => acc + a.balance, 0);
+  const totalBalance = accounts.filter((a: any) => a.isActive).reduce((acc: number, a: any) => acc + a.balance, 0);
 
   return (
     <div className="space-y-6">
