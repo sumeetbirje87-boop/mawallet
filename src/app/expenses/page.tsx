@@ -10,7 +10,7 @@ export default async function ExpensesPage() {
   
   let totalExpense = 0;
   const map: Record<string, {value: number, fill: string}> = {};
-  data.transactions.forEach(tx => {
+  data.transactions.forEach((tx: any) => {
       totalExpense += tx.amount / 100;
       const cat = tx.category?.name || "Uncategorized";
       map[cat] = {

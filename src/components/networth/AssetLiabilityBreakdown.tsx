@@ -50,11 +50,11 @@ export function AssetLiabilityBreakdown({
            <CardTitle>Liabilities Breakdown</CardTitle>
          </CardHeader>
          <CardContent>
-           {liabilities.filter(l => l.balance > 0).length === 0 ? (
+           {liabilities.filter((l: any) => l.balance > 0).length === 0 ? (
              <p className="text-muted-foreground text-sm">No active debts dragging you down. Incredible!</p>
            ) : (
              <ul className="space-y-4">
-               {liabilities.filter(l => l.balance > 0).map(l => (
+               {liabilities.filter((l: any) => l.balance > 0).map((l: any) => (
                  <li key={l.id} className="flex items-center justify-between pb-2 border-b border-border/50 last:border-0">
                    <div className="flex items-center gap-3">
                      <div className="p-2 bg-rose-50 rounded-full">{getIcon(l.type, false)}</div>

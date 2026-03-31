@@ -71,8 +71,8 @@ export async function getModalData() {
   let categories = await prisma.category.findMany({ where: { userId } });
 
   // Auto-seed Categories if user lacks tracking dimensions
-  const hasExpense = categories.some(c => c.type === "expense");
-  const hasIncome = categories.some(c => c.type === "income");
+  const hasExpense = categories.some((c: any) => c.type === "expense");
+  const hasIncome = categories.some((c: any) => c.type === "income");
 
   if (!hasExpense || !hasIncome) {
     const toCreate = [];

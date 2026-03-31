@@ -15,8 +15,8 @@ export async function getNetWorthData() {
   const accounts = await prisma.account.findMany({ where: { userId, isActive: true } });
   const debts = await prisma.debt.findMany({ where: { userId, isActive: true } });
 
-  const totalAssets = accounts.reduce((acc, a) => acc + (a.balance / 100), 0);
-  const totalLiabilities = debts.reduce((acc, d) => acc + (d.currentBalance / 100), 0);
+  const totalAssets = accounts.reduce((acc: any, a: any) => acc + (a.balance / 100), 0);
+  const totalLiabilities = debts.reduce((acc: any, d: any) => acc + (d.currentBalance / 100), 0);
   const currentNetWorth = totalAssets - totalLiabilities;
 
   // 2. Fetch Historical Transactions for retroactive charting
@@ -34,7 +34,7 @@ export async function getNetWorthData() {
   // Note: Debt Payments are recorded as 'expense' tracking "debt_payment". 
   // True Wealth Generation (that alters Net Worth) excludes debt_payments because Debt Payments lower Cash AND Liability equally.
   const monthlySavings: Record<string, number> = {};
-  transactions.forEach(tx => {
+  transactions.forEach((tx: any) => {
     const monthKey = format(tx.date, 'yyyy-MM');
     if (!monthlySavings[monthKey]) monthlySavings[monthKey] = 0;
     

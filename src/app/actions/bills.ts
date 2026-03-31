@@ -37,7 +37,7 @@ export async function getBillsAndStatus() {
   const processedBills = bills.map((bill: any) => {
     
     // Have we paid it this month?
-    const hasPaid = transactionsThisMonth.some(tx => tx.tags.includes(`bill_id_${bill.id}`));
+    const hasPaid = transactionsThisMonth.some((tx: any) => tx.tags.includes(`bill_id_${bill.id}`));
     
     let status: "upcoming" | "due_today" | "overdue" | "paid" = "upcoming";
     let daysUntilDue = bill.dueDateDay - currentDay;

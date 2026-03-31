@@ -13,7 +13,7 @@ export async function getDashboardData() {
 
   // 1. Total Balance Across Accounts
   const accounts = await prisma.account.findMany({ where: { userId, isActive: true } });
-  const totalBalance = accounts.reduce((acc, account) => acc + account.balance, 0);
+  const totalBalance = accounts.reduce((acc: any, account: any) => acc + account.balance, 0);
 
   // 2. Income & Expenses for Current Month vs Previous Month
   const thisMonthStart = startOfMonth(now);
@@ -36,11 +36,11 @@ export async function getDashboardData() {
     },
   });
 
-  const incomeThisMonth = currentMonthTx.filter((tx) => tx.type === "income").reduce((acc, tx) => acc + tx.amount, 0);
-  const expensesThisMonth = currentMonthTx.filter((tx) => tx.type === "expense").reduce((acc, tx) => acc + tx.amount, 0);
+  const incomeThisMonth = currentMonthTx.filter((tx: any) => tx.type === "income").reduce((acc: any, tx: any) => acc + tx.amount, 0);
+  const expensesThisMonth = currentMonthTx.filter((tx: any) => tx.type === "expense").reduce((acc: any, tx: any) => acc + tx.amount, 0);
   
-  const incomeLastMonth = lastMonthTx.filter((tx) => tx.type === "income").reduce((acc, tx) => acc + tx.amount, 0);
-  const expensesLastMonth = lastMonthTx.filter((tx) => tx.type === "expense").reduce((acc, tx) => acc + tx.amount, 0);
+  const incomeLastMonth = lastMonthTx.filter((tx: any) => tx.type === "income").reduce((acc: any, tx: any) => acc + tx.amount, 0);
+  const expensesLastMonth = lastMonthTx.filter((tx: any) => tx.type === "expense").reduce((acc: any, tx: any) => acc + tx.amount, 0);
 
   const netSavingsThisMonth = incomeThisMonth - expensesThisMonth;
   const netSavingsLastMonth = incomeLastMonth - expensesLastMonth;
@@ -72,7 +72,7 @@ export async function getDashboardData() {
 
   // 4. Expense Breakdown (Current Month)
   const expenseByCategoryMap: Record<string, { value: number, fill: string }> = {};
-  currentMonthTx.filter(tx => tx.type === "expense").forEach(tx => {
+  currentMonthTx.filter((tx: any) => tx.type === "expense").forEach((tx: any) => {
     const catName = tx.category?.name || "Other";
     const catColor = tx.category?.color || "#94a3b8"; // slate-400
     

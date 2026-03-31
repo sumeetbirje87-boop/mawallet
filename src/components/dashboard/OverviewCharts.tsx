@@ -90,7 +90,7 @@ export function OverviewCharts({ chartData, expenseBreakdown, currency }: { char
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
                 <span className="text-xs text-muted-foreground block">Total</span>
                 <span className="font-bold text-foreground">
-                  {formatCurrency(expenseBreakdown.reduce((acc, curr) => acc + curr.value, 0))}
+                  {formatCurrency(expenseBreakdown.reduce((acc: any, curr: any) => acc + curr.value, 0))}
                 </span>
              </div>
           )}

@@ -10,7 +10,7 @@ export default async function IncomePage() {
   
   let totalIncome = 0;
   const map: Record<string, number> = {};
-  data.transactions.forEach(tx => {
+  data.transactions.forEach((tx: any) => {
       totalIncome += (tx.amount / 100);
       const cat = tx.category?.name || "Uncategorized";
       map[cat] = (map[cat] || 0) + (tx.amount / 100);

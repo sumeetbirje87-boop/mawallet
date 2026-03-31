@@ -8,8 +8,8 @@ async function BillsDashboard() {
   const bills = await getBillsAndStatus();
   const currency = await getUserCurrency();
   
-  const upcomingBills = bills.filter(b => b.status === "upcoming" || b.status === "due_today" || b.status === "overdue");
-  const upcomingTotal = upcomingBills.reduce((acc, b) => acc + b.amount, 0);
+  const upcomingBills = bills.filter((b: any) => b.status === "upcoming" || b.status === "due_today" || b.status === "overdue");
+  const upcomingTotal = upcomingBills.reduce((acc: any, b: any) => acc + b.amount, 0);
 
   const formattedMonth = format(new Date(), "MMMM yyyy");
 
@@ -29,7 +29,7 @@ async function BillsDashboard() {
         <div className="p-5 border border-border rounded-xl bg-card shadow-sm">
            <h4 className="text-sm font-medium text-muted-foreground">Due / Overdue</h4>
            <p className="text-3xl font-bold mt-1 text-rose-500">
-             {bills.filter(b => b.status === "due_today" || b.status === "overdue").length}
+             {bills.filter((b: any) => b.status === "due_today" || b.status === "overdue").length}
            </p>
         </div>
         <div className="p-5 border border-border rounded-xl bg-primary/5 shadow-sm">

@@ -39,11 +39,11 @@ export function BillModal({
   useEffect(() => {
     if (isOpen) {
       getModalData().then(data => {
-        setCategories(data.categories.filter(c => c.type === "expense"));
+        setCategories(data.categories.filter((c: any) => c.type === "expense"));
         setAccounts(data.accounts);
         
         if (!categoryId && data.categories.length > 0) {
-           const expCat = data.categories.find(c => c.type === "expense");
+           const expCat = data.categories.find((c: any) => c.type === "expense");
            if (expCat) setCategoryId(expCat.id);
         }
         if (!accountId && data.accounts.length > 0) {

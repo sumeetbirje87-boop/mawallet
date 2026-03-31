@@ -7,7 +7,7 @@ async function DebtsContent() {
   const debts = await getDebts();
   const currency = await getUserCurrency();
   
-  const totalDebt = debts.reduce((acc, d) => acc + d.currentBalance, 0);
+  const totalDebt = debts.reduce((acc: any, d: any) => acc + d.currentBalance, 0);
 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-3 duration-500">
@@ -20,7 +20,7 @@ async function DebtsContent() {
         </div>
         <div className="p-5 border border-border rounded-xl bg-card shadow-sm">
            <h4 className="text-sm font-medium text-muted-foreground">Active Liabilities</h4>
-           <p className="text-3xl font-bold mt-2 text-foreground">{debts.filter(d => d.currentBalance > 0).length}</p>
+           <p className="text-3xl font-bold mt-2 text-foreground">{debts.filter((d: any) => d.currentBalance > 0).length}</p>
         </div>
         <div className="p-5 border border-border rounded-xl bg-card shadow-sm">
            <h4 className="text-sm font-medium text-muted-foreground">Next Payment Due</h4>

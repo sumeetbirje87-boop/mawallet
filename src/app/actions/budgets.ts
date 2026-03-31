@@ -38,8 +38,8 @@ export async function getBudgetsWithProgress() {
   // Map expenses to budgets
   const budgetProgress = budgets.map((budget: any) => {
     const spentAmount = expensesThisMonth
-      .filter(tx => tx.categoryId === budget.categoryId)
-      .reduce((acc, tx) => acc + tx.amount, 0);
+      .filter((tx: any) => tx.categoryId === budget.categoryId)
+      .reduce((acc: any, tx: any) => acc + tx.amount, 0);
 
     return {
       ...budget,

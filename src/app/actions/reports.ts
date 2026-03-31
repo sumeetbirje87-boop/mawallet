@@ -49,7 +49,7 @@ export async function getReportData(period: "this_month" | "last_month" | "last_
   let totalIncome = 0;
   let totalExpense = 0;
 
-  transactions.forEach(tx => {
+  transactions.forEach((tx: any) => {
     if (tx.type === "income") totalIncome += tx.amount / 100;
     if (tx.type === "expense") totalExpense += tx.amount / 100;
   });
@@ -59,7 +59,7 @@ export async function getReportData(period: "this_month" | "last_month" | "last_
 
   // 3. Category Breakdown (Expenses Only)
   const expenseByCategoryMap: Record<string, { value: number, fill: string }> = {};
-  transactions.filter(tx => tx.type === "expense").forEach(tx => {
+  transactions.filter((tx: any) => tx.type === "expense").forEach((tx: any) => {
     const catName = tx.category?.name || "Other";
     const catColor = tx.category?.color || "#94a3b8"; 
     
@@ -87,8 +87,8 @@ export async function getReportData(period: "this_month" | "last_month" | "last_
       expense: 0
     }));
 
-    transactions.forEach(tx => {
-      const match = trendData.find(d => format(d.rawDate!, 'yyyy-MM-dd') === format(tx.date, 'yyyy-MM-dd'));
+    transactions.forEach((tx: any) => {
+      const match = trendData.find((d: any) => format(d.rawDate!, 'yyyy-MM-dd') === format(tx.date, 'yyyy-MM-dd'));
       if (match) {
         if (tx.type === "income") match.income += tx.amount / 100;
         if (tx.type === "expense") match.expense += tx.amount / 100;
@@ -104,8 +104,8 @@ export async function getReportData(period: "this_month" | "last_month" | "last_
       expense: 0
     }));
 
-    transactions.forEach(tx => {
-      const match = trendData.find(d => format(d.rawDate!, 'yyyy-MM') === format(tx.date, 'yyyy-MM'));
+    transactions.forEach((tx: any) => {
+      const match = trendData.find((d: any) => format(d.rawDate!, 'yyyy-MM') === format(tx.date, 'yyyy-MM'));
       if (match) {
         if (tx.type === "income") match.income += tx.amount / 100;
         if (tx.type === "expense") match.expense += tx.amount / 100;
