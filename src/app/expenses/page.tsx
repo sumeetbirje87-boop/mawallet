@@ -21,7 +21,7 @@ export default async function ExpensesPage() {
   
   const expenseCategories = Object.entries(map).map(([name, val]) => ({
       name, value: val.value, fill: val.fill, type: "expense"
-  })).sort((a,b) => b.value - a.value);
+  })).sort((a: any, b: any) => b.value - a.value);
 
   const formatMoney = (val: number) => new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(val);
 

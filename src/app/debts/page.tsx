@@ -26,7 +26,7 @@ async function DebtsContent() {
            <h4 className="text-sm font-medium text-muted-foreground">Next Payment Due</h4>
            <p className="text-3xl font-bold mt-2 text-foreground">
               {debts.length > 0 
-                ? debts.sort((a,b) => a.dueDateDay - b.dueDateDay)[0].dueDateDay 
+                ? debts.sort((a: any, b: any) => a.dueDateDay - b.dueDateDay)[0].dueDateDay 
                 : "--"}
            </p>
            <p className="text-xs text-muted-foreground mt-1">Day of current month</p>

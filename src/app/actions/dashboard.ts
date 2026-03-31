@@ -84,7 +84,7 @@ export async function getDashboardData() {
 
   const expenseBreakdown = Object.entries(expenseByCategoryMap)
     .map(([name, data]) => ({ name, value: data.value, fill: data.fill }))
-    .sort((a, b) => b.value - a.value);
+    .sort((a: any, b: any) => b.value - a.value);
 
   // 5. Recent Transactions
   const recentTransactions = await prisma.transaction.findMany({

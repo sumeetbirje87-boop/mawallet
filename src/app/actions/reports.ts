@@ -71,7 +71,7 @@ export async function getReportData(period: "this_month" | "last_month" | "last_
 
   const expenseBreakdown = Object.entries(expenseByCategoryMap)
     .map(([name, data]) => ({ name, value: data.value, fill: data.fill }))
-    .sort((a, b) => b.value - a.value); // Sort highest first
+    .sort((a: any, b: any) => b.value - a.value); // Sort highest first
 
   // 4. Trend Data Generation
   let trendData: { name: string; income: number; expense: number; rawDate?: Date }[] = [];

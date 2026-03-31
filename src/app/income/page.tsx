@@ -18,7 +18,7 @@ export default async function IncomePage() {
   
   const incomeCategories = Object.entries(map).map(([name, value]) => ({
       name, value, fill: "#10b981", type: "income"
-  })).sort((a,b) => b.value - a.value);
+  })).sort((a: any, b: any) => b.value - a.value);
 
   const formatMoney = (val: number) => new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(val);
 

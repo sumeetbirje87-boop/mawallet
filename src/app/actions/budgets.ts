@@ -48,7 +48,7 @@ export async function getBudgetsWithProgress() {
     };
   });
 
-  return budgetProgress.sort((a, b) => b.amountLimit - a.amountLimit);
+  return budgetProgress.sort((a: any, b: any) => b.amountLimit - a.amountLimit);
 }
 
 export async function createBudget(data: { categoryId: string; amountLimit: number }) {
